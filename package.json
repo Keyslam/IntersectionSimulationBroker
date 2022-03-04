@@ -1,0 +1,27 @@
+{
+  "name": "intersectionsimulationbroker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsc && node .",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "run": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tjakka5/InsectionSimulationBroker.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Tjakka5/InsectionSimulationBroker/issues"
+  },
+  "homepage": "https://github.com/Tjakka5/InsectionSimulationBroker#readme",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "typescript": "^4.6.2"
+  }
+}
