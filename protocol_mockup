@@ -1,0 +1,191 @@
+{
+    "eventType": "CONNECT_CONTROLLER", 
+    "data": {
+        "id": string,
+        "discardIncorrectMessages": boolean,
+        "version": number,
+    }
+}
+
+{
+    "eventType": "CONNECT_SIMULATOR", 
+    "data": {
+        "id": string,
+        "version": number,
+    }
+}
+
+{
+    "eventType": "SESSION_START", 
+}
+
+{
+    "eventType": "SESSION_STOP", 
+}
+
+{
+    "eventType": "ERROR_NOT_PARSEABLE", 
+    "data": {
+        "exception": string,
+    }
+}
+
+{
+    "eventType": "ERROR_UNKNOWN_EVENT_TYPE", 
+    "data": {
+        "exception": string,
+    }
+}
+
+{ 
+    "eventType": "ERROR_MALFORMED_MESSAGE", 
+    "data": {
+        "errors": string[],
+    }
+}
+
+{ 
+    "eventType": "ERROR_INVALID_STATE", 
+}
+
+
+{
+    "messageId": number, 
+    "eventType": "SET_AUTOMOTIVE_TRAFFIC_LIGHT", 
+    "data": {
+        "id": number,
+        "state": "GREEN" | "RED" | "ORANGE",
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "SET_BICYCLE_TRAFFIC_LIGHT", 
+    "data": {
+        "id": number,
+        "state": "GREEN" | "RED" | "ORANGE",
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "SET_PEDESTRIAN_TRAFFIC_LIGHT", 
+    "data": {
+        "id": number,
+        "state": "GREEN" | "RED" | "BLINKING",
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "SET_BRIDGE_WATER_SIDE_TRAFFIC_LIGHT", 
+    "data": {
+        "id": number,
+        "state": "GREEN" | "RED" | "GREENRED",
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "SET_BRIDGE_WATER_MIDDLE_TRAFFIC_LIGHT", 
+    "data": {
+        "id": number,
+        "state": "ON" | "OFF",
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "SET_BRIDGE_INDICATOR", 
+    "data": {
+        "id": number,
+        "state": "ON" | "OFF",
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "SET_BRIDGE_ROADSIDE_SINGLE_TRAFFIC_LIGHT", 
+    "data": {
+        "id": number,
+        "state": "ON" | "OFF",
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "SET_BRIDGE_ROADSIDE_DOUBLE_TRAFFIC_LIGHT", 
+    "data": {
+        "id": number,
+        "state": "ON" | "OFF",
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "REQUEST_BRIDGE_STATE", 
+    "data": {
+        "id": number,
+        "state": "DOWN" | "UP",
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "ACKNOWLEDGE_BRIDGE_STATE", 
+    "data": {
+        "id": number,
+        "state": "DOWN" | "UP",
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "REQUEST_BARRIERS_STATE", 
+    "data": {
+        "id": number,
+        "state": "DOWN" | "UP",
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "ACKNOWLEDGE_BARRIERS_STATE", 
+    "data": {
+        "id": number,
+        "state": "DOWN" | "UP",
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "ENTITY_ENTERED_ZONE", 
+    "data": {
+        "id": number,
+        "priority": number,
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "ENTITY_EXITED_ZONE", 
+    "data": {
+        "id": number,
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "RESERVE_ZONE", 
+    "data": {
+        "id": number,
+    }
+}
+
+{
+    "messageId": number, 
+    "eventType": "UNRESERVE_ZONE", 
+    "data": {
+        "id": number,
+    }
+}
