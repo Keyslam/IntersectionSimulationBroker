@@ -109,7 +109,6 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
     }
 
     const schema = schemas.get(data.eventType)!;
-    console.log(schema);
 
     const validation = validator.validate(data, schema);
 
