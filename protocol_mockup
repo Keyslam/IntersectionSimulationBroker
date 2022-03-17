@@ -1,191 +1,206 @@
 {
-    "eventType": "CONNECT_CONTROLLER", 
-    "data": {
-        "id": string,
-        "discardIncorrectMessages": boolean,
-        "version": number,
+    "eventType" : "CONNECT_CONTROLLER", 
+    
+    "data" : {
+        "sessionName"    : string,
+        "sessionVersion" : 1,
+
+        // Gooi bericht weg, als de JSON niet geparsed kan worden
+        "discardParseErrors" : boolean, 
+
+        // Gooi bericht weg, als 'eventType' niet herkend wordt
+        "discardEventTypeErrors" : boolean,
+        
+        // Gooi bericht weg, als het niet voldoet aan de (data) specificatie
+        "discardMalformedDataErrors" : boolean,
+
+        // Gooi bericht weg, als het niet voldoet aan de (sequentie) specificatie
+        "discardInvalidStateErrors" : boolean,
     }
 }
 
 {
-    "eventType": "CONNECT_SIMULATOR", 
-    "data": {
-        "id": string,
-        "version": number,
+    "eventType" : "CONNECT_SIMULATOR",
+
+    "data" : {
+        "sessionName"    : string,
+        "sessionVersion" : 1,
+
+        // Gooi bericht weg, als de JSON niet geparsed kan worden
+        "discardParseErrors" : boolean,
+
+        // Gooi bericht weg, als 'eventType' niet herkend wordt
+        "discardEventTypeErrors" : boolean,
+
+        // Gooi bericht weg, als het niet voldoet aan de (data) specificatie
+        "discardMalformedDataErrors" : boolean,
+
+        // Gooi bericht weg, als het niet voldoet aan de (sequentie) specificatie
+        "discardInvalidStateErrors" : boolean,
     }
 }
 
 {
-    "eventType": "SESSION_START", 
+    "eventType" : "SESSION_START", 
 }
 
 {
-    "eventType": "SESSION_STOP", 
+    "eventType" : "SESSION_STOP", 
 }
 
 {
-    "eventType": "ERROR_NOT_PARSEABLE", 
-    "data": {
-        "exception": string,
-    }
+    "eventType" : "ERROR_NOT_PARSEABLE",
+
+    "data" : {
+        // Ontvangen, onjuiste bericht
+        "receivedMessage" : string,
+
+        // Exception gegeven tijdens het parsen
+        "exception" : string,
+    },
 }
 
 {
-    "eventType": "ERROR_UNKNOWN_EVENT_TYPE", 
-    "data": {
-        "exception": string,
+    "eventType" : "ERROR_UNKNOWN_EVENT_TYPE", 
+    
+    "data" : {
+        // Ontvangen, onjuiste bericht
+        "receivedMessage" : string,
+
+        // Lijst van valide event types
+        "validEventTypes" : string[],
     }
 }
 
 { 
-    "eventType": "ERROR_MALFORMED_MESSAGE", 
-    "data": {
-        "errors": string[],
+    "eventType" : "ERROR_MALFORMED_MESSAGE", 
+    "data" : {
+        // Ontvangen, onjuiste bericht
+        "receivedMessage" : string,
+
+        // Lijst van incorrectheden in het bericht
+        "errors" : string[],
     }
 }
 
 { 
-    "eventType": "ERROR_INVALID_STATE", 
-}
+    "eventType" : "ERROR_INVALID_STATE",
 
+    "data" : {
+        // Ontvangen, onjuiste bericht
+        "receivedMessage" : string,
 
-{
-    "messageId": number, 
-    "eventType": "SET_AUTOMOTIVE_TRAFFIC_LIGHT", 
-    "data": {
-        "id": number,
-        "state": "GREEN" | "RED" | "ORANGE",
+        // Beschrijving van incorrectheid
+        "error" : string,
     }
 }
 
 {
-    "messageId": number, 
-    "eventType": "SET_BICYCLE_TRAFFIC_LIGHT", 
-    "data": {
-        "id": number,
-        "state": "GREEN" | "RED" | "ORANGE",
+    "eventType" : "SET_AUTOMOBILE_ROUTE_STATE",
+
+    "data" : {
+        "routeId" : 1 | 2 | 3 | 4 | 5 | 7 | 8 | 9 | 10 | 11 | 12 | 15,
+        "state"   : "GREEN" | "ORANGE" | "RED"
     }
 }
 
 {
-    "messageId": number, 
-    "eventType": "SET_PEDESTRIAN_TRAFFIC_LIGHT", 
-    "data": {
-        "id": number,
-        "state": "GREEN" | "RED" | "BLINKING",
+    "eventType" : "SET_CYCLIST_ROUTE_STATE",
+
+    "data" : {
+        "routeId" : 21 | 22 | 23 | 24,
+        "state"   : "GREEN" | "ORANGE" | "RED"
     }
 }
 
 {
-    "messageId": number, 
-    "eventType": "SET_BRIDGE_WATER_SIDE_TRAFFIC_LIGHT", 
+    "eventType" : "SET_PEDESTRIAN_ROUTE_STATE", 
+    
     "data": {
-        "id": number,
-        "state": "GREEN" | "RED" | "GREENRED",
+        "routeId" : 31 | 32 | 33 | 34 | 35 | 36 | 37 | 38,
+        "state"   : "GREEN" | "BLINKING" | "RED"
     }
 }
 
 {
-    "messageId": number, 
-    "eventType": "SET_BRIDGE_WATER_MIDDLE_TRAFFIC_LIGHT", 
-    "data": {
-        "id": number,
-        "state": "ON" | "OFF",
+    "eventType" : "SET_BOAT_ROUTE_STATE",
+
+    "data" : {
+        "routeId" : 41 | 42,
+        "state"   : "GREENRED" | "GREEN" | "RED",
     }
 }
 
 {
-    "messageId": number, 
-    "eventType": "SET_BRIDGE_INDICATOR", 
-    "data": {
-        "id": number,
-        "state": "ON" | "OFF",
+    "eventType" : "SET_BRIDGE_WARNING_LIGHT_STATE",
+
+    "data" : {
+        "state" : "ON" | "OFF",
     }
 }
 
 {
-    "messageId": number, 
-    "eventType": "SET_BRIDGE_ROADSIDE_SINGLE_TRAFFIC_LIGHT", 
-    "data": {
-        "id": number,
-        "state": "ON" | "OFF",
+    "eventType" : "REQUEST_BRIDGE_STATE",
+
+    "data" : {
+        "state" : "DOWN" | "UP",
     }
 }
 
 {
-    "messageId": number, 
-    "eventType": "SET_BRIDGE_ROADSIDE_DOUBLE_TRAFFIC_LIGHT", 
-    "data": {
-        "id": number,
-        "state": "ON" | "OFF",
+    "eventType" : "ACKNOWLEDGE_BRIDGE_STATE",
+
+    "data" : {
+        "state" : "DOWN" | "UP",
     }
 }
 
 {
-    "messageId": number, 
-    "eventType": "REQUEST_BRIDGE_STATE", 
-    "data": {
-        "id": number,
-        "state": "DOWN" | "UP",
+    "eventType" : "REQUEST_BARRIERS_STATE",
+
+    "data" : {
+        "state" : "DOWN" | "UP",
     }
 }
 
 {
-    "messageId": number, 
-    "eventType": "ACKNOWLEDGE_BRIDGE_STATE", 
-    "data": {
-        "id": number,
-        "state": "DOWN" | "UP",
+    "eventType" : "ACKNOWLEDGE_BARRIERS_STATE",
+
+    "data" : {
+        "state" : "DOWN" | "UP",
     }
 }
 
 {
-    "messageId": number, 
-    "eventType": "REQUEST_BARRIERS_STATE", 
-    "data": {
-        "id": number,
-        "state": "DOWN" | "UP",
+    "eventType" : "REQUEST_BRIDGE_ROAD_EMPTY", 
+}
+
+{
+    "eventType" : "ACKNOWLEDGE_BRIDGE_ROAD_EMPTY", 
+}
+
+{
+    "eventType" : "REQUEST_BRIDGE_WATER_EMPTY", 
+}
+
+{
+    "eventType" : "ACKNOWLEDGE_BRIDGE_WATER_EMPTY", 
+}
+
+{
+    "eventType" : "ENTITY_ENTERED_ZONE", 
+
+    "data" : {
+        "routeId"  : number,
+        "sensorId" : number,
     }
 }
 
 {
-    "messageId": number, 
-    "eventType": "ACKNOWLEDGE_BARRIERS_STATE", 
-    "data": {
-        "id": number,
-        "state": "DOWN" | "UP",
-    }
-}
+    "eventType" : "ENTITY_EXITED_ZONE", 
 
-{
-    "messageId": number, 
-    "eventType": "ENTITY_ENTERED_ZONE", 
-    "data": {
-        "id": number,
-        "priority": number,
-    }
-}
-
-{
-    "messageId": number, 
-    "eventType": "ENTITY_EXITED_ZONE", 
-    "data": {
-        "id": number,
-    }
-}
-
-{
-    "messageId": number, 
-    "eventType": "RESERVE_ZONE", 
-    "data": {
-        "id": number,
-    }
-}
-
-{
-    "messageId": number, 
-    "eventType": "UNRESERVE_ZONE", 
-    "data": {
-        "id": number,
+    "data" : {
+        "routeId"  : number,
+        "sensorId" : number,
     }
 }

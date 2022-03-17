@@ -1,33 +1,28 @@
-import MessageSchema from "./messageSchema";
+import MessageSchema from "../../messageSchema";
 
-const SetAutomotiveTrafficLightsSchema: MessageSchema = {
+const SetBoatRouteSTate: MessageSchema = {
     "type": "object",
     "properties": {
-        "messageId": {
-            "type": "integer", 
-            "minimum": 0
-        },
-
         "eventType": {
             "type": "string",
-            "const": "SET_AUTOMOTIVE_TRAFFIC_LIGHTS",
+            "const": "SET_PEDESTRIAN_ROUTE_STATE",
         },
         
         "data": {
             "type": "object",
             "properties": {
-                "id": {
+                "routeId": {
                     "type": "integer", 
-                    "minimum": 0
+                    "enum": [31, 32, 33, 34, 35, 36, 37, 38],
                 },
                 "state": {
                     "type": "string",
-                    "enum": ["RED", "ORANGE", "GREEN"],
+                    "enum": ["GREEN", "BLINKING", "RED"],
                 }
             },
 
             "required": [
-                "id",
+                "routeId",
                 "state",
             ],
             "additionalProperties": false
@@ -35,11 +30,10 @@ const SetAutomotiveTrafficLightsSchema: MessageSchema = {
     },
 
     "required": [
-        "messageId",
         "eventType",
         "data"
     ],
     "additionalProperties": false
 };
 
-export default SetAutomotiveTrafficLightsSchema;
+export default SetBoatRouteSTate;

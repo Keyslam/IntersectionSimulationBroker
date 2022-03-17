@@ -1,33 +1,23 @@
-import MessageSchema from "./messageSchema";
+import MessageSchema from "../../messageSchema";
 
-const SetPedestrianTrafficLightsSchema: MessageSchema = {
+const RequestBridgeState: MessageSchema = {
     "type": "object",
     "properties": {
-        "messageId": {
-            "type": "integer", 
-            "minimum": 0
-        },
-
         "eventType": {
             "type": "string",
-            "const": "SET_PEDESTRIAN_TRAFFIC_LIGHTS",
+            "const": "REQUEST_BRIDGE_STATE",
         },
         
         "data": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "integer", 
-                    "minimum": 0
-                },
                 "state": {
                     "type": "string",
-                    "enum": ["RED", "GREEN", "BLINKING"],
+                    "enum": ["DOWN", "UP"],
                 }
             },
 
             "required": [
-                "id",
                 "state",
             ],
             "additionalProperties": false
@@ -35,11 +25,10 @@ const SetPedestrianTrafficLightsSchema: MessageSchema = {
     },
 
     "required": [
-        "messageId",
         "eventType",
         "data"
     ],
     "additionalProperties": false
 };
 
-export default SetPedestrianTrafficLightsSchema;
+export default RequestBridgeState;
