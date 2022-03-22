@@ -5,7 +5,7 @@ const SetAutomobileRouteState: MessageSchema = {
     "properties": {
         "eventType": {
             "type": "string",
-            "const": "SET_AUTOMOTIVE_ROUTE_STATE",
+            "const": "SET_AUTOMOBILE_ROUTE_STATE",
         },
         
         "data": {
