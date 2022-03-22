@@ -18,23 +18,8 @@ export default class Session {
     constructor(controller: WebSocket, simulation: WebSocket) {
         this.controller = controller;
         this.simulation = simulation;
-       
-        this.setupController();
-        this.setupSimulator();
 
         this.sendSessionStart();
-    }
-
-    private setupController(): void {
-        this.controller.on("close", () => {
-            this.sendSessionStop();
-        })
-    }
-
-    private setupSimulator(): void {
-        this.simulation.on("close", () => {
-            this.sendSessionStop();
-        })
     }
 
     private sendSessionStart(): void {
