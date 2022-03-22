@@ -13,7 +13,7 @@ const connections: Map<WebSocket, {
     websocket: WebSocket,
     sessionId: string,
     sessionPreferences: SessionPreferences,
-    type: "CONTROLLER" | "SIMULATOR", 
+    type: "CONTROLLER" | "SIMULATOR",
 }> = new Map();
 
 const sessions: Map<string, Session> = new Map();
@@ -22,7 +22,7 @@ function tryParse(message: string): [false, string] | [true, any] {
     try {
         const data = JSON.parse(message);
         return [true, data];
-    } catch(error) {
+    } catch (error) {
         const message = (error as Error).message;
         return [false, message];
     }
@@ -31,10 +31,10 @@ function tryParse(message: string): [false, string] | [true, any] {
 function handleParseError(target: WebSocket, receivedMessage: string, exception: string) {
     const message = JSON.stringify({
         eventType: "ERROR_NOT_PARSEABLE",
-    
+
         data: {
-            receivedMessage : receivedMessage,
-            exception : exception,
+            receivedMessage: receivedMessage,
+            exception: exception,
         },
     });
 
@@ -44,10 +44,10 @@ function handleParseError(target: WebSocket, receivedMessage: string, exception:
 function handleUnknownEventType(target: WebSocket, receivedMessage: string, validEventTypes: string[]) {
     const message = JSON.stringify({
         eventType: "ERROR_UNKNOWN_EVENT_TYPE",
-    
+
         data: {
-            receivedMessage : receivedMessage,
-            validEventTypes : validEventTypes,
+            receivedMessage: receivedMessage,
+            validEventTypes: validEventTypes,
         },
     });
 
@@ -57,7 +57,7 @@ function handleUnknownEventType(target: WebSocket, receivedMessage: string, vali
 function handleMalformedMessage(target: WebSocket, receivedMessage: string, errors: string[]) {
     const message = JSON.stringify({
         eventType: "ERROR_MALFORMED_MESSAGE",
-    
+
         data: {
             receivedMessage: receivedMessage,
             errors: errors,
@@ -70,7 +70,7 @@ function handleMalformedMessage(target: WebSocket, receivedMessage: string, erro
 function handleInvalidState(target: WebSocket, receivedMessage: string, error: string) {
     const message = JSON.stringify({
         eventType: "ERROR_INVALID_STATE",
-    
+
         data: {
             receivedMessage: receivedMessage,
             errors: error,
@@ -80,7 +80,7 @@ function handleInvalidState(target: WebSocket, receivedMessage: string, error: s
     target.send(message);
 }
 
-function handleMessage(target: WebSocket, messageRaw: RawData, session: Session | undefined, preferences: SessionPreferences): void  {
+function handleMessage(target: WebSocket, messageRaw: RawData, session: Session | undefined, preferences: SessionPreferences): void {
     const message = messageRaw.toString();
 
     const [parseSuccess, dataOrError] = tryParse(message);
@@ -101,7 +101,7 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
 
     if (data.eventType == undefined || !schemas.has(data.eventType)) {
         handleUnknownEventType(target, message, [...schemas.keys()]);
-        
+
         if (!preferences.discardEventTypeErrors)
             session?.propagateMessage(target, message);
 
@@ -134,7 +134,7 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
         };
 
         if (data.eventType == "CONNECT_CONTROLLER") {
-            const controllerAlreadyConnected = Array.from(connections.values()).filter((connection) => 
+            const controllerAlreadyConnected = Array.from(connections.values()).filter((connection) =>
                 connection.sessionId == sessionId && connection.type == "CONTROLLER"
             ).length > 0;
 
@@ -151,7 +151,7 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
                 type: "CONTROLLER",
             });
         } else if (data.eventType == "CONNECT_SIMULATOR") {
-            const simulatorAlreadyConnected = Array.from(connections.values()).filter((connection) => 
+            const simulatorAlreadyConnected = Array.from(connections.values()).filter((connection) =>
                 connection.sessionId == sessionId && connection.type == "SIMULATOR"
             ).length > 0;
 
@@ -172,13 +172,13 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
         const controller = Array.from(connections.values()).filter((connection) =>
             connection.sessionId == sessionId && connection.type == "CONTROLLER"
         )[0];
-        const simulator = Array.from(connections.values()).filter((connection) => 
+        const simulator = Array.from(connections.values()).filter((connection) =>
             connection.sessionId == sessionId && connection.type == "SIMULATOR"
         )[0];
 
 
         if (controller && simulator) {
-            const session = Api[data.data.sessionVersion-1](controller.websocket, simulator.websocket);
+            const session = Api[data.data.sessionVersion - 1](controller.websocket, simulator.websocket);
             sessions.set(sessionId, session);
         }
     } else {
@@ -188,37 +188,42 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
 
 
 wss.on("connection", (ws) => {
-  ws.on("message", (messageRaw) => {
-    let session: Session | undefined = undefined;
-    let preferences: SessionPreferences = connections.get(ws)?.sessionPreferences || {
-        discardParseErrors: true,
-        discardEventTypeErrors: true,
-        discardMalformedDataErrors: true,
-        discardInvalidStateErrors: true,
-    }
+    console.log(`${ws.url} connected`);
 
-    const sessionId = connections.get(ws)?.sessionId;
-    if (sessionId) {
-        session = sessions.get(sessionId);
-    }
+    ws.on("message", (messageRaw) => {
+        let session: Session | undefined = undefined;
+        let preferences: SessionPreferences = connections.get(ws)?.sessionPreferences || {
+            discardParseErrors: true,
+            discardEventTypeErrors: true,
+            discardMalformedDataErrors: true,
+            discardInvalidStateErrors: true,
+        }
 
-    handleMessage(ws, messageRaw, session, preferences);
-  });
+        const sessionId = connections.get(ws)?.sessionId;
+        if (sessionId) {
+            session = sessions.get(sessionId);
+        }
 
-  ws.on("close", () => {
-    let session: Session | undefined = undefined;
-    const sessionId = connections.get(ws)?.sessionId;
-    if (sessionId) {
-        session = sessions.get(sessionId);
-    }
+        handleMessage(ws, messageRaw, session, preferences);
+    });
 
-    if (session) {
-        session.end();
-        sessions.delete(sessionId!);
-    }
+    ws.on("close", () => {
+        console.log(`${ws.url} disconnected`);
 
-    connections.delete(ws);
+        let session: Session | undefined = undefined;
+        const sessionId = connections.get(ws)?.sessionId;
+        if (sessionId) {
+            session = sessions.get(sessionId);
+        }
 
-    ws.removeAllListeners();
-  })
+        if (session) {
+            session.end();
+            sessions.delete(sessionId!);
+        }
+
+        connections.delete(ws);
+
+        ws.removeAllListeners();
+
+    })
 });
