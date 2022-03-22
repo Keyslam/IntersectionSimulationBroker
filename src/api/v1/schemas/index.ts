@@ -9,7 +9,7 @@ import RequestBarriersState from "./requestBarriersState";
 import RequestBridgeRoadEmpty from "./requestBridgeRoadEmpty";
 import RequestBridgeState from "./requestBridgeState";
 import RequestBridgeWaterEmpty from "./requestBridgeWaterEmpty";
-import SetAutomobileRouteState from "./setAutomotiveRouteState";
+import SetAutomobileRouteState from "./setAutomobileRouteState";
 import SetBoatRouteState from "./setBoatRouteState";
 import SetBridgeWarningLightState from "./setBridgeWarningLightState";
 import SetCyclistRouteState from "./setCyclistRouteState";
