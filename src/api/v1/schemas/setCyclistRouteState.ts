@@ -5,7 +5,7 @@ const SetCyclistRouteState: MessageSchema = {
     "properties": {
         "eventType": {
             "type": "string",
-            "const": "SET_CYCLIST_TRAFFIC_LIGHTS",
+            "const": "SET_CYCLIST_ROUTE_STATE",
         },
         
         "data": {
