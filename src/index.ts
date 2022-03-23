@@ -188,8 +188,6 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
 
 
 wss.on("connection", (ws) => {
-    console.log(`${ws.url} connected`);
-
     ws.on("message", (messageRaw) => {
         let session: Session | undefined = undefined;
         let preferences: SessionPreferences = connections.get(ws)?.sessionPreferences || {
@@ -208,8 +206,6 @@ wss.on("connection", (ws) => {
     });
 
     ws.on("close", () => {
-        console.log(`${ws.url} disconnected`);
-
         let session: Session | undefined = undefined;
         const sessionId = connections.get(ws)?.sessionId;
         if (sessionId) {
