@@ -5,7 +5,7 @@ const SetBoatRouteSTate: MessageSchema = {
     "properties": {
         "eventType": {
             "type": "string",
-            "const": "SET_PEDESTRIAN_ROUTE_STATE",
+            "const": "SET_BOAT_ROUTE_STATE",
         },
         
         "data": {
@@ -13,11 +13,11 @@ const SetBoatRouteSTate: MessageSchema = {
             "properties": {
                 "routeId": {
                     "type": "integer", 
-                    "enum": [31, 32, 33, 34, 35, 36, 37, 38],
+                    "enum": [41, 42],
                 },
                 "state": {
                     "type": "string",
-                    "enum": ["GREEN", "BLINKING", "RED"],
+                    "enum": ["GREEN", "GREENRED", "RED"],
                 }
             },
 
