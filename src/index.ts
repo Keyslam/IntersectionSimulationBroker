@@ -134,6 +134,8 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
         };
 
         if (data.eventType == "CONNECT_CONTROLLER") {
+            console.log("CONNECT_CONTROLLER");
+
             const controllerAlreadyConnected = Array.from(connections.values()).filter((connection) =>
                 connection.sessionId == sessionId && connection.type == "CONTROLLER"
             ).length > 0;
@@ -151,6 +153,8 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
                 type: "CONTROLLER",
             });
         } else if (data.eventType == "CONNECT_SIMULATOR") {
+            console.log("CONNECT_SIMULATOR");
+
             const simulatorAlreadyConnected = Array.from(connections.values()).filter((connection) =>
                 connection.sessionId == sessionId && connection.type == "SIMULATOR"
             ).length > 0;
@@ -178,6 +182,7 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
 
 
         if (controller && simulator) {
+            console.log("Session starting");
             const session = Api[data.data.sessionVersion - 1](controller.websocket, simulator.websocket);
             sessions.set(sessionId, session);
         }
@@ -188,6 +193,8 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
 
 
 wss.on("connection", (ws) => {
+    console.log("Client connected");
+    
     ws.on("message", (messageRaw) => {
         let session: Session | undefined = undefined;
         let preferences: SessionPreferences = connections.get(ws)?.sessionPreferences || {
@@ -206,6 +213,8 @@ wss.on("connection", (ws) => {
     });
 
     ws.on("close", () => {
+        console.log("Client disconnected");
+
         let session: Session | undefined = undefined;
         const sessionId = connections.get(ws)?.sessionId;
         if (sessionId) {
