@@ -1,8 +1,6 @@
-import { Validator } from "jsonschema";
 import { WebSocket, RawData } from "ws";
-import RouteMask from "./routeMask";
 import RouteStates from "./routeStates";
-import Schemas from "./schemas";
+import Schemas, { Message } from "./schemas";
 
 export type SessionPreferences = {
     discardParseErrors: boolean,
@@ -46,7 +44,7 @@ export default class Session {
         this.simulation.send(message);
     }
 
-    public handleMessage(sender: WebSocket, message: any, messageRaw: string, discardInvalidStateErrors: boolean) {
+    public handleMessage(sender: WebSocket, message: Message, messageRaw: string, discardInvalidStateErrors: boolean) {
         switch (message.eventType) {
             case "SET_AUTOMOBILE_ROUTE_STATE": {
                 if (!this.routeStates.CanAutomobileRouteStateTransition(message.data.routeId, message.data.state)) {

@@ -31,4 +31,11 @@ const AcknowledgeBarriersState: MessageSchema = {
     "additionalProperties": false
 };
 
+export type AcknowledgeBarriersStateType = {
+    eventType: "ACKNOWLEDGE_BARRIERS_STATE",
+    data: {
+        state: "DOWN" | "UP"
+    }
+}
+
 export default AcknowledgeBarriersState;

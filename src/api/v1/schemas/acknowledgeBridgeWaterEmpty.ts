@@ -15,4 +15,8 @@ const AcknowledgeBridgeWaterEmpty: MessageSchema = {
     "additionalProperties": false
 };
 
+export type AcknowledgeBridgeWaterEmptyType = {
+    eventType: "ACKNOWLEDGE_BRIDGE_WATER_EMPTY"
+}
+
 export default AcknowledgeBridgeWaterEmpty;

@@ -31,4 +31,11 @@ const RequestBarriersState: MessageSchema = {
     "additionalProperties": false
 };
 
+export type RequestBarriersStateType = {
+    eventType: "REQUEST_BARRIERS_STATE"
+    data: {
+        state: "DOWN" | "UP"
+    }
+}
+
 export default RequestBarriersState;

@@ -31,4 +31,11 @@ const AcknowledgeBridgeState: MessageSchema = {
     "additionalProperties": false
 };
 
+export type AcknowledgeBridgeStateType = {
+    eventType: "ACKNOWLEDGE_BRIDGE_STATE",
+    data: {
+        state: "DOWN" | "UP",
+    }
+}
+
 export default AcknowledgeBridgeState;

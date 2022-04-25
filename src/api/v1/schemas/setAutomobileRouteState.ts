@@ -1,4 +1,5 @@
 import MessageSchema from "../../messageSchema";
+import AutomobileRouteId from "./automobileRouteId";
 
 const SetAutomobileRouteState: MessageSchema = {
     "type": "object",
@@ -35,5 +36,13 @@ const SetAutomobileRouteState: MessageSchema = {
     ],
     "additionalProperties": false
 };
+
+export type SetAutomobileRouteStateType = {
+    eventType: "SET_AUTOMOBILE_ROUTE_STATE",
+    data: {
+        routeId: AutomobileRouteId,
+        state: "GREEN" | "RED" | "ORANGE"
+    }
+}
 
 export default SetAutomobileRouteState;

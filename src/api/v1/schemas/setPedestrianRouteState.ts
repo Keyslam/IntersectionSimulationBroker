@@ -1,4 +1,5 @@
 import MessageSchema from "../../messageSchema";
+import PedestrianRouteId from "./pedestrianRouteId";
 
 const SetPedestrianRouteState: MessageSchema = {
     "type": "object",
@@ -35,5 +36,13 @@ const SetPedestrianRouteState: MessageSchema = {
     ],
     "additionalProperties": false
 };
+
+export type SetPedestrianRouteStateType = {
+    eventType: "SET_PEDESTRIAN_ROUTE_STATE",
+    data: {
+        routeId: PedestrianRouteId,
+        state: "GREEN" | "RED" | "BLINKING"
+    }
+}
 
 export default SetPedestrianRouteState;

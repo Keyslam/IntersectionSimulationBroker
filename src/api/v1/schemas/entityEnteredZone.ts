@@ -1,4 +1,8 @@
 import MessageSchema from "../../messageSchema";
+import AutomobileRouteId from "./automobileRouteId";
+import BoatRouteId from "./boatRouteId";
+import CyclistRouteId from "./cyclistRouteId";
+import PedestrianRouteId from "./pedestrianRouteId";
 
 const EntityEnteredZone: MessageSchema = {
     "type": "object",
@@ -12,10 +16,12 @@ const EntityEnteredZone: MessageSchema = {
             "type": "object",
             "properties": {
                 "routeId": {
-                    "type": "number",
+                    "type": "integer",
+                    "enum": [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 15, 21, 22, 23, 24, 31, 32, 33, 34, 35, 36, 37, 38, 41, 42],
                 },
                 "sensorId": {
-                    "type": "number",
+                    "type": "integer",
+                    "enum": [1, 2, 3, 4],
                 }
             },
 
@@ -33,5 +39,13 @@ const EntityEnteredZone: MessageSchema = {
     ],
     "additionalProperties": false
 };
+
+export type EntityEnteredZoneType = {
+    eventType: "ENTITY_ENTERED_ZONE",
+    data: {
+        routeId: AutomobileRouteId | CyclistRouteId | PedestrianRouteId | BoatRouteId,
+        sensorId: 1 | 2 | 3 | 4,
+    }
+}
 
 export default EntityEnteredZone;

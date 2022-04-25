@@ -15,4 +15,8 @@ const AcknowledgeBridgeRoadEmpty: MessageSchema = {
     "additionalProperties": false
 };
 
+export type AcknowledgeBridgeRoadEmptyType = {
+    eventType: "ACKNOWLEDGE_BRIDGE_ROAD_EMPTY"
+}
+
 export default AcknowledgeBridgeRoadEmpty;

@@ -15,4 +15,8 @@ const RequestBridgeRoadEmpty: MessageSchema = {
     "additionalProperties": false
 };
 
+export type RequestBridgeRoadEmptyType = {
+    eventType: "REQUEST_BRIDGE_ROAD_EMPTY"
+}
+
 export default RequestBridgeRoadEmpty;

@@ -15,4 +15,8 @@ const RequestBridgeWaterEmpty: MessageSchema = {
     "additionalProperties": false
 };
 
+export type RequestBridgeWaterEmptyType = {
+    eventType: "REQUEST_BRIDGE_WATER_EMPTY"
+}
+
 export default RequestBridgeWaterEmpty;

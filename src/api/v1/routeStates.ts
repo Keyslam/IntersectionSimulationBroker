@@ -159,7 +159,10 @@ export default class RouteStates {
 
         return Array.from(mask.values()).filter((otherRouteId) => {
             const otherRoute = this.GetRoute(otherRouteId);
-            return otherRoute!.open;
+            if (otherRoute)
+                return otherRoute!.open;
+            
+            return false;
         })
     }
 

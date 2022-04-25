@@ -1,6 +1,7 @@
 import MessageSchema from "../../messageSchema";
+import BoatRouteId from "./boatRouteId";
 
-const SetBoatRouteSTate: MessageSchema = {
+const SetBoatRouteState: MessageSchema = {
     "type": "object",
     "properties": {
         "eventType": {
@@ -36,4 +37,13 @@ const SetBoatRouteSTate: MessageSchema = {
     "additionalProperties": false
 };
 
-export default SetBoatRouteSTate;
+export type SetBoatRouteStateType = {
+    eventType: "SET_BOAT_ROUTE_STATE",
+    data: {
+        routeId: BoatRouteId,
+        state: "GREEN" | "GREENRED" | "RED"
+    }
+}
+
+
+export default SetBoatRouteState;

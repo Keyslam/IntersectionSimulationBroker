@@ -31,4 +31,11 @@ const RequestBridgeState: MessageSchema = {
     "additionalProperties": false
 };
 
+export type RequestBridgeStateType = {
+    eventType: "REQUEST_BRIDGE_STATE"
+    data: {
+        state: "DOWN" | "UP"
+    }
+}
+
 export default RequestBridgeState;

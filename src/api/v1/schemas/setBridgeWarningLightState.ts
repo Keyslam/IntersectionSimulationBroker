@@ -31,4 +31,11 @@ const SetBridgeWarningLightState: MessageSchema = {
     "additionalProperties": false
 };
 
+export type SetBridgeWarningLightStateType = {
+    eventType: "SET_BRIDGE_WARNING_LIGHT_STATE",
+    data: {
+        state: "ON" | "OFF",
+    }
+}
+
 export default SetBridgeWarningLightState;

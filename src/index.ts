@@ -5,6 +5,12 @@ import Session, { SessionPreferences } from "./api/v1/session";
 import Schemas from "./api/schemas";
 import MessageSchema from "./api/messageSchema";
 import Api from "./api";
+import fs from "fs"
+import { Message } from "./api/v1/schemas";
+
+const sessionNamesStream = fs.createWriteStream("sessionNames.txt", {
+    flags: "a"
+});
 
 const wss = new WebSocketServer({ port: 8080 });
 const validator = new Validator();
@@ -178,6 +184,8 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
 
 
         if (controller && simulator) {
+            sessionNamesStream.write(`${sessionId}\n`);
+            
             const session = Api[data.data.sessionVersion - 1](controller.websocket, simulator.websocket);
             sessions.set(sessionId, session);
         }
@@ -206,20 +214,44 @@ wss.on("connection", (ws) => {
     });
 
     ws.on("close", () => {
-        let session: Session | undefined = undefined;
-        const sessionId = connections.get(ws)?.sessionId;
-        if (sessionId) {
-            session = sessions.get(sessionId);
+        try {
+            let session: Session | undefined = undefined;
+            const sessionId = connections.get(ws)?.sessionId;
+            if (sessionId) {
+                session = sessions.get(sessionId);
+            }
+
+            if (session) {
+                session.end();
+                sessions.delete(sessionId!);
+            }
+
+            connections.delete(ws);
+
+            ws.removeAllListeners();
+        } catch (e) {
+
         }
+    })
 
-        if (session) {
-            session.end();
-            sessions.delete(sessionId!);
+    ws.on("error", () => {
+        try {
+            let session: Session | undefined = undefined;
+            const sessionId = connections.get(ws)?.sessionId;
+            if (sessionId) {
+                session = sessions.get(sessionId);
+            }
+
+            if (session) {
+                session.end();
+                sessions.delete(sessionId!);
+            }
+
+            connections.delete(ws);
+
+            ws.removeAllListeners();
+        } catch(e) {
+            
         }
-
-        connections.delete(ws);
-
-        ws.removeAllListeners();
-
     })
 });

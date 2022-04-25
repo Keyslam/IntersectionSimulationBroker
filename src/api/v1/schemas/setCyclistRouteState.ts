@@ -1,4 +1,5 @@
 import MessageSchema from "../../messageSchema";
+import CyclistRouteId from "./cyclistRouteId";
 
 const SetCyclistRouteState: MessageSchema = {
     "type": "object",
@@ -35,5 +36,14 @@ const SetCyclistRouteState: MessageSchema = {
     ],
     "additionalProperties": false
 };
+
+export type SetCyclistRouteStateType = {
+    eventType: "SET_CYCLIST_ROUTE_STATE",
+    data: {
+        routeId: CyclistRouteId,
+        state: "GREEN" | "RED" | "ORANGE"
+    }
+}
+
 
 export default SetCyclistRouteState;
