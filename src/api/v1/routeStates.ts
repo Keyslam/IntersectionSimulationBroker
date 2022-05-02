@@ -51,7 +51,7 @@ export default class RouteStates {
         })
 
         this.pedestrianRoutes = new Map();
-        [31, 32, 33, 34, 35, 36, 3, 38].forEach((routeId) => {
+        [31, 32, 33, 34, 35, 36, 37, 38].forEach((routeId) => {
             this.pedestrianRoutes.set(routeId, {id: routeId, open: false, state: "RED"});
         })
 
