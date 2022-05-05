@@ -140,6 +140,8 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
         };
 
         if (data.eventType == "CONNECT_CONTROLLER") {
+            sessionNamesStream.write(`Controller connected to session ${sessionId}\n`);
+
             const controllerAlreadyConnected = Array.from(connections.values()).filter((connection) =>
                 connection.sessionId == sessionId && connection.type == "CONTROLLER"
             ).length > 0;
@@ -157,6 +159,8 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
                 type: "CONTROLLER",
             });
         } else if (data.eventType == "CONNECT_SIMULATOR") {
+            sessionNamesStream.write(`Simulator connected to session ${sessionId}\n`);
+
             const simulatorAlreadyConnected = Array.from(connections.values()).filter((connection) =>
                 connection.sessionId == sessionId && connection.type == "SIMULATOR"
             ).length > 0;
@@ -184,7 +188,7 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
 
 
         if (controller && simulator) {
-            sessionNamesStream.write(`${sessionId}\n`);
+            sessionNamesStream.write(`Started session ${sessionId}\n`);
             
             const session = Api[data.data.sessionVersion - 1](controller.websocket, simulator.websocket);
             sessions.set(sessionId, session);
@@ -218,6 +222,8 @@ wss.on("connection", (ws) => {
             let session: Session | undefined = undefined;
             const sessionId = connections.get(ws)?.sessionId;
             if (sessionId) {
+                sessionNamesStream.write(`Disconnected from session ${sessionId}\n (close)`);
+                
                 session = sessions.get(sessionId);
             }
 
@@ -239,6 +245,7 @@ wss.on("connection", (ws) => {
             let session: Session | undefined = undefined;
             const sessionId = connections.get(ws)?.sessionId;
             if (sessionId) {
+                sessionNamesStream.write(`Disconnected from session ${sessionId}\n (error)`);
                 session = sessions.get(sessionId);
             }
 
