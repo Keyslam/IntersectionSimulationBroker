@@ -198,8 +198,35 @@ function handleMessage(target: WebSocket, messageRaw: RawData, session: Session 
     }
 }
 
+function closeConnection(wss: WebSocketServer, ws: WebSocket): void {
+    try {
+        let session: Session | undefined = undefined;
+        const sessionId = connections.get(ws)?.sessionId;
+        if (sessionId) {
+            sessionNamesStream.write(`Disconnected from session ${sessionId}\n`);
+            
+            session = sessions.get(sessionId);
+        }
+
+        if (session) {
+            session.end();
+            sessions.delete(sessionId!);
+        }
+
+        connections.delete(ws);
+
+        wss.clients.delete(ws);
+        ws.removeAllListeners();
+        ws.terminate();
+    } catch (e) {
+
+    }
+}
 
 wss.on("connection", (ws) => {
+    /// @ts-ignore
+    ws.isAlive = true;
+
     ws.on("message", (messageRaw) => {
         let session: Session | undefined = undefined;
         let preferences: SessionPreferences = connections.get(ws)?.sessionPreferences || {
@@ -218,47 +245,34 @@ wss.on("connection", (ws) => {
     });
 
     ws.on("close", () => {
-        try {
-            let session: Session | undefined = undefined;
-            const sessionId = connections.get(ws)?.sessionId;
-            if (sessionId) {
-                sessionNamesStream.write(`Disconnected from session ${sessionId}\n (close)`);
-                
-                session = sessions.get(sessionId);
-            }
-
-            if (session) {
-                session.end();
-                sessions.delete(sessionId!);
-            }
-
-            connections.delete(ws);
-
-            ws.removeAllListeners();
-        } catch (e) {
-
-        }
+        closeConnection(wss, ws)
     })
 
     ws.on("error", () => {
-        try {
-            let session: Session | undefined = undefined;
-            const sessionId = connections.get(ws)?.sessionId;
-            if (sessionId) {
-                sessionNamesStream.write(`Disconnected from session ${sessionId}\n (error)`);
-                session = sessions.get(sessionId);
-            }
+        closeConnection(wss, ws)
+    })
 
-            if (session) {
-                session.end();
-                sessions.delete(sessionId!);
-            }
-
-            connections.delete(ws);
-
-            ws.removeAllListeners();
-        } catch(e) {
-            
-        }
+    ws.on("pong", () => {
+        /// @ts-ignore
+        ws.isAlive = true;
     })
 });
+
+setInterval(() => {
+    const toRemove: WebSocket[] = [];
+
+    wss.clients.forEach((ws) => {
+        /// @ts-ignore
+        if (!ws.isAlive) {
+            toRemove.push(ws);
+        } else {
+            /// @ts-ignore
+            ws.isAlive = false;
+            ws.ping();
+        }
+    })
+
+    toRemove.forEach((ws) => {
+        closeConnection(wss, ws);
+    })
+}, 3000)
