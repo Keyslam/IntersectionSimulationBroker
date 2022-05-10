@@ -136,7 +136,8 @@ export default class RouteStates {
 
         return (route.state == "RED" && state == "GREENRED") ||
             (route.state == "GREENRED" && state == "GREEN") ||
-            (route.state == "GREEN" && state == "RED")
+            (route.state == "GREEN" && state == "RED") ||
+            (route.state == "RED" && state == "GREEN")
     }
 
     public SetBoatRouteState(routeId: number, state: "GREEN" | "GREENRED" | "RED") {
