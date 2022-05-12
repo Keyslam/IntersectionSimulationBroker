@@ -79,7 +79,7 @@ function handleInvalidState(target: WebSocket, receivedMessage: string, error: s
 
         data: {
             receivedMessage: receivedMessage,
-            errors: error,
+            error: error,
         },
     });
 
