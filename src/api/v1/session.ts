@@ -127,8 +127,10 @@ export default class Session {
         const message = JSON.stringify({
             eventType: "ERROR_INVALID_STATE",
 
-            receivedMessage: receivedMessage,
-            error: error
+            data: {
+                receivedMessage: receivedMessage,
+                error: error
+            }
         });
         
         sender.send(message);
@@ -142,8 +144,10 @@ export default class Session {
         const message = JSON.stringify({
             eventType: "ERROR_INVALID_STATE",
 
-            receivedMessage: receivedMessage,
-            error: error
+            data: {
+                receivedMessage: receivedMessage,
+                error: error
+            }
         });
         
         sender.send(message);
